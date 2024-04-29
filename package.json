@@ -4,6 +4,7 @@
  "description": "A simple copy and live reloading plugin for vite.",
  "type": "module",
  "scripts": {},
+ "main": "src/index.js",
  "repository": {
   "type": "git",
   "url": "git+https://github.com/Wyzix33/vite-plugin-copy-live-reload.git"
