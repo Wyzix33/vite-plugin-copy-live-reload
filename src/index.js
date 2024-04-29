@@ -7,21 +7,22 @@ export const copyReload = function (options = {}) {
   name: 'file-watcher',
   apply: 'serve',
   configureServer(server) {
-   const watcher = chokidar.watch(folderToWatch, { ignored: /(^|[\/\\])\../, persistent: true });
+   const watcher = chokidar.watch(folderToWatch, {
+    ignored: /(^|[\/\\])\../,
+    persistent: true,
+    ignoreInitial: true,
+   });
    const viteCacheFolder = path.join(destinationFolder, '.vite');
    fsExtra.removeSync(viteCacheFolder);
-   watcher.on('add', (filePath) => handleFileChange(filePath)).on('change', (filePath) => handleFileChange(filePath));
+   watcher.on('add', handleFileChange).on('change', handleFileChange);
    function handleFileChange(filePath) {
     const relativePath = path.relative(folderToWatch, filePath);
     const destinationPath = path.join(destinationFolder, relativePath);
-    fsExtra
-     .ensureDir(path.dirname(destinationPath))
-     .then(() => fsExtra.copyFile(filePath, destinationPath))
-     .then(() => {
-      console.log(`File ${filePath} copied to ${destinationPath}`);
-      if (reloadPage) server.ws.send({ type: 'full-reload', path: '*' });
-     })
-     .catch((err) => console.error('Error copying file:', err));
+    const dir = path.dirname(destinationPath);
+    if (!fsExtra.pathExistsSync(dir)) fsExtra.mkdirpSync(dir);
+    fsExtra.copyFile(filePath, destinationPath);
+    console.log(`File ${filePath} copied to ${destinationPath}`);
+    if (reloadPage) server.ws.send({ type: 'full-reload', path: '*' });
    }
    console.log(`Watching files in ${folderToWatch}...`);
   },
