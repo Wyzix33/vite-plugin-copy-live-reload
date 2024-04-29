@@ -1,0 +1,29 @@
+{
+ "name": "vite-plugin-copy-live-reload",
+ "version": "1.0.0",
+ "description": "A simple copy and live reloading plugin for vite.",
+ "type": "module",
+ "scripts": {},
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/Wyzix33/vite-plugin-copy-live-reload.git"
+ },
+ "keywords": [
+  "vite",
+  "copy",
+  "live",
+  "refresh",
+  "reload"
+ ],
+ "author": "gabriel",
+ "license": "MIT",
+ "bugs": {
+  "url": "https://github.com/Wyzix33/vite-plugin-copy-live-reload/issues"
+ },
+ "homepage": "https://github.com/Wyzix33/vite-plugin-copy-live-reload",
+ "devDependencies": {
+  "chokidar": "^3.6.0",
+  "fs-extra": "^11.2.0"
+ },
+ "dependencies": {}
+}
